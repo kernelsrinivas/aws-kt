@@ -186,6 +186,103 @@ export const eventBridgeHandler = async (event: EventBridgeEvent<string, any>, c
 7. **CloudWatch Logs**
    - Decodes and logs CloudWatch log data.
 
+Certainly! Here’s the sample TypeScript code for sending an email using AWS Lambda with Amazon SES, formatted in Markdown:
+
+```markdown
+# Sending an Email Using AWS Lambda with Amazon SES
+
+## Prerequisites
+
+Ensure you have the AWS SDK for JavaScript installed:
+
+```bash
+npm install aws-sdk
+```
+
+## Email Code
+
+Here is a TypeScript code snippet for sending an email using Amazon SES within an AWS Lambda function:
+
+```typescript
+import { SES } from 'aws-sdk';
+import { Context, APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+
+const ses = new SES({ region: 'us-east-1' }); // Specify your region
+
+export const lambdaHandler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
+    const toAddress = 'recipient@example.com'; // Replace with the recipient's email address
+    const fromAddress = 'sender@example.com'; // Replace with a verified email address in SES
+    const subject = 'Test Email from AWS Lambda';
+    const body = 'This is a test email sent from an AWS Lambda function using Amazon SES.';
+
+    try {
+        const params = {
+            Destination: {
+                ToAddresses: [toAddress],
+            },
+            Message: {
+                Body: {
+                    Text: {
+                        Charset: 'UTF-8',
+                        Data: body,
+                    },
+                },
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: subject,
+                },
+            },
+            Source: fromAddress,
+        };
+
+        await ses.sendEmail(params).promise();
+        
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
+                message: 'Email sent successfully!',
+            }),
+        };
+    } catch (error) {
+        console.error('Error sending email:', error);
+        
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                message: 'Failed to send email.',
+                error: error.message,
+            }),
+        };
+    }
+};
+```
+
+## Explanation
+
+1. **Import Dependencies:**
+   - Import the `SES` class from the AWS SDK and Lambda types.
+
+2. **Initialize SES Client:**
+   - Create an instance of the SES client, specifying the AWS region. 
+
+3. **Handler Function:**
+   - Define `lambdaHandler` to handle the incoming event and context.
+   - Set up email parameters including `Destination`, `Message`, and `Source`.
+   - Call `ses.sendEmail` to send the email and handle the response.
+
+4. **Error Handling:**
+   - Catch and log any errors that occur during the email sending process.
+
+5. **Return Response:**
+   - Return an HTTP response with status code 200 if successful or 500 if there's an error.
+
+**Note:** Ensure that you have verified the sender email address in Amazon SES, and if you are in the SES sandbox environment, you will need to verify the recipient's email address as well.
+
+For more information on configuring Amazon SES, refer to the [Amazon SES documentation](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html).
+```
+
+This Markdown provides a clear and formatted guide on sending an email using AWS Lambda and Amazon SES in TypeScript.
+
 8. **EventBridge (CloudWatch Events)**
    - Logs EventBridge events.
 
