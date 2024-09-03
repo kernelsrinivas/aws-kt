@@ -100,3 +100,93 @@ export const lambdaHandler = async (event: string, context: Context): Promise<st
 | AWS X-Ray                                   | Special integration                     |
 
 For more details on each service and invocation method, consult the AWS Lambda documentation.
+
+
+Here's a small TypeScript code snippet for handling basic operations for each type of AWS Lambda event. These examples assume that you're using AWS Lambda with the Node.js runtime and the `aws-lambda` types package.
+
+```typescript
+// Example TypeScript handlers for various AWS Lambda events
+
+import { APIGatewayEvent, Context, APIGatewayProxyResult, SQSEvent, SNSMessage, S3Event, KinesisStreamEvent, DynamoDBStreamEvent, CloudWatchLogsEvent, EventBridgeEvent } from 'aws-lambda';
+
+// API Gateway
+export const apiGatewayHandler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
+    console.log('API Gateway Event:', JSON.stringify(event, null, 2));
+    return {
+        statusCode: 200,
+        body: JSON.stringify({ message: 'Hello from API Gateway!' })
+    };
+};
+
+// S3
+export const s3Handler = async (event: S3Event, context: Context): Promise<void> => {
+    event.Records.forEach(record => {
+        console.log('S3 Object:', record.s3.object.key);
+    });
+};
+
+// DynamoDB Streams
+export const dynamoDBHandler = async (event: DynamoDBStreamEvent, context: Context): Promise<void> => {
+    event.Records.forEach(record => {
+        console.log('DynamoDB Record:', JSON.stringify(record.dynamodb, null, 2));
+    });
+};
+
+// Kinesis
+export const kinesisHandler = async (event: KinesisStreamEvent, context: Context): Promise<void> => {
+    event.Records.forEach(record => {
+        console.log('Kinesis Record:', Buffer.from(record.kinesis.data, 'base64').toString('ascii'));
+    });
+};
+
+// SQS
+export const sqsHandler = async (event: SQSEvent, context: Context): Promise<void> => {
+    event.Records.forEach(record => {
+        console.log('SQS Message:', record.body);
+    });
+};
+
+// SNS
+export const snsHandler = async (event: SNSMessage, context: Context): Promise<void> => {
+    console.log('SNS Message:', JSON.stringify(event, null, 2));
+};
+
+// CloudWatch Logs
+export const cloudWatchLogsHandler = async (event: CloudWatchLogsEvent, context: Context): Promise<void> => {
+    event.awslogs.data = Buffer.from(event.awslogs.data, 'base64').toString('ascii');
+    console.log('CloudWatch Logs:', JSON.stringify(JSON.parse(event.awslogs.data), null, 2));
+};
+
+// EventBridge (CloudWatch Events)
+export const eventBridgeHandler = async (event: EventBridgeEvent<string, any>, context: Context): Promise<void> => {
+    console.log('EventBridge Event:', JSON.stringify(event, null, 2));
+};
+```
+
+## Explanation of Each Handler
+
+1. **API Gateway**
+   - Logs the event and returns a simple response with a status code of 200.
+
+2. **S3**
+   - Logs the S3 object key from the event.
+
+3. **DynamoDB Streams**
+   - Logs changes from DynamoDB Streams.
+
+4. **Kinesis**
+   - Decodes and logs Kinesis records.
+
+5. **SQS**
+   - Logs messages from an SQS queue.
+
+6. **SNS**
+   - Logs SNS messages.
+
+7. **CloudWatch Logs**
+   - Decodes and logs CloudWatch log data.
+
+8. **EventBridge (CloudWatch Events)**
+   - Logs EventBridge events.
+
+These handlers provide a basic starting point for processing each type of event. You can expand upon them based on your application's needs.
