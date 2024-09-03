@@ -1,4 +1,4 @@
-# AWS Lambda Handler Example
+# AWS Lambda Handler
 
 ## Code Example
 
