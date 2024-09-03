@@ -185,8 +185,15 @@ export const eventBridgeHandler = async (event: EventBridgeEvent<string, any>, c
 
 7. **CloudWatch Logs**
    - Decodes and logs CloudWatch log data.
+     
+8. **EventBridge (CloudWatch Events)**
+   - Logs EventBridge events.
 
-Certainly! Here’s the sample TypeScript code for sending an email using AWS Lambda with Amazon SES, formatted in Markdown:
+These handlers provide a basic starting point for processing each type of event. You can expand upon them based on your application's needs.
+
+## Email
+
+Certainly! Here’s the sample TypeScript code for sending an email using AWS Lambda with Amazon SES.
 
 ```markdown
 # Sending an Email Using AWS Lambda with Amazon SES
@@ -281,9 +288,82 @@ export const lambdaHandler = async (event: APIGatewayEvent, context: Context): P
 For more information on configuring Amazon SES, refer to the [Amazon SES documentation](https://docs.aws.amazon.com/ses/latest/DeveloperGuide/Welcome.html).
 ```
 
-This Markdown provides a clear and formatted guide on sending an email using AWS Lambda and Amazon SES in TypeScript.
+## S3 Buckets
 
-8. **EventBridge (CloudWatch Events)**
-   - Logs EventBridge events.
+```markdown
+# AWS Lambda: List S3 Bucket Objects and Return as JSON
 
-These handlers provide a basic starting point for processing each type of event. You can expand upon them based on your application's needs.
+## Prerequisites
+
+Ensure you have the AWS SDK for JavaScript installed:
+
+```bash
+npm install aws-sdk
+```
+
+## S3 Code
+
+Here is a TypeScript code snippet that lists objects from an S3 bucket and returns the result as a JSON response:
+
+```typescript
+import { S3 } from 'aws-sdk';
+import { Context, APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+
+const s3 = new S3({ region: 'us-east-1' }); // Specify your region
+
+export const lambdaHandler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
+    const bucketName = 'your-bucket-name'; // Replace with your bucket name
+
+    try {
+        // List objects in the bucket
+        const data = await s3.listObjectsV2({ Bucket: bucketName }).promise();
+
+        // Extract the object keys
+        const objectKeys = data.Contents?.map(object => object.Key) || [];
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({
+                message: 'Objects retrieved successfully!',
+                objects: objectKeys,
+            }),
+        };
+    } catch (error) {
+        console.error('Error fetching objects from S3:', error);
+
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                message: 'Failed to retrieve objects.',
+                error: error.message,
+            }),
+        };
+    }
+};
+```
+
+## Explanation
+
+1. **Import Dependencies:**
+   - Import the `S3` class from the AWS SDK and Lambda types.
+
+2. **Initialize S3 Client:**
+   - Create an instance of the S3 client, specifying the AWS region.
+
+3. **Handler Function:**
+   - Define `lambdaHandler` to handle the incoming event and context.
+   - Specify the bucket name.
+   - Use `s3.listObjectsV2` to list objects in the specified bucket.
+   - Map through the `Contents` array to extract object keys.
+   - Return the list of object keys in the response.
+
+4. **Error Handling:**
+   - Catch and log any errors that occur during the S3 operation.
+
+5. **Return Response:**
+   - Return an HTTP response with status code 200 and the list of objects if successful, or 500 if there’s an error.
+
+**Note:** Ensure that your Lambda function has the appropriate IAM permissions to access the S3 bucket.
+
+For more details on using AWS S3 and configuring Lambda permissions, refer to the [AWS S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html) and the [AWS Lambda documentation](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html).
+```
