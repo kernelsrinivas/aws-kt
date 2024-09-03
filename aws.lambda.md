@@ -367,3 +367,227 @@ export const lambdaHandler = async (event: APIGatewayEvent, context: Context): P
 
 For more details on using AWS S3 and configuring Lambda permissions, refer to the [AWS S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html) and the [AWS Lambda documentation](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html).
 ```
+
+
+Certainly! Here’s the sample TypeScript code for performing CRUD operations on an Amazon RDS MySQL database using AWS Lambda, formatted in Markdown:
+
+```markdown
+# AWS Lambda: CRUD Operations with Amazon RDS MySQL
+
+## Prerequisites
+
+Ensure you have the `mysql2` library installed:
+
+```bash
+npm install mysql2
+```
+
+## Database Configuration
+
+Make sure you have your RDS MySQL instance details:
+- `host`
+- `user`
+- `password`
+- `database`
+
+## Sample Code
+
+### 1. **Post Comment**
+
+```typescript
+import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+import mysql from 'mysql2/promise';
+
+const connectionConfig = {
+    host: 'your-rds-endpoint',
+    user: 'your-username',
+    password: 'your-password',
+    database: 'your-database',
+};
+
+export const postComment = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+    const { postId, comment } = JSON.parse(event.body || '{}');
+
+    if (!postId || !comment) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: 'postId and comment are required.' }),
+        };
+    }
+
+    const connection = await mysql.createConnection(connectionConfig);
+    
+    try {
+        await connection.execute('INSERT INTO comments (postId, comment) VALUES (?, ?)', [postId, comment]);
+        return {
+            statusCode: 201,
+            body: JSON.stringify({ message: 'Comment posted successfully.' }),
+        };
+    } catch (error) {
+        console.error('Error posting comment:', error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Failed to post comment.', error: error.message }),
+        };
+    } finally {
+        await connection.end();
+    }
+};
+```
+
+### 2. **Edit Comment**
+
+```typescript
+import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+import mysql from 'mysql2/promise';
+
+const connectionConfig = {
+    host: 'your-rds-endpoint',
+    user: 'your-username',
+    password: 'your-password',
+    database: 'your-database',
+};
+
+export const editComment = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+    const { commentId, newComment } = JSON.parse(event.body || '{}');
+
+    if (!commentId || !newComment) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: 'commentId and newComment are required.' }),
+        };
+    }
+
+    const connection = await mysql.createConnection(connectionConfig);
+
+    try {
+        const [result] = await connection.execute('UPDATE comments SET comment = ? WHERE id = ?', [newComment, commentId]);
+
+        if ((result as mysql.ResultSetHeader).affectedRows === 0) {
+            return {
+                statusCode: 404,
+                body: JSON.stringify({ message: 'Comment not found.' }),
+            };
+        }
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: 'Comment updated successfully.' }),
+        };
+    } catch (error) {
+        console.error('Error updating comment:', error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Failed to update comment.', error: error.message }),
+        };
+    } finally {
+        await connection.end();
+    }
+};
+```
+
+### 3. **List Comments**
+
+```typescript
+import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+import mysql from 'mysql2/promise';
+
+const connectionConfig = {
+    host: 'your-rds-endpoint',
+    user: 'your-username',
+    password: 'your-password',
+    database: 'your-database',
+};
+
+export const listComments = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+    const postId = event.queryStringParameters?.postId;
+
+    if (!postId) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: 'postId is required.' }),
+        };
+    }
+
+    const connection = await mysql.createConnection(connectionConfig);
+
+    try {
+        const [rows] = await connection.execute('SELECT id, comment FROM comments WHERE postId = ?', [postId]);
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ comments: rows }),
+        };
+    } catch (error) {
+        console.error('Error listing comments:', error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Failed to list comments.', error: error.message }),
+        };
+    } finally {
+        await connection.end();
+    }
+};
+```
+
+### 4. **Delete Comment**
+
+```typescript
+import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+import mysql from 'mysql2/promise';
+
+const connectionConfig = {
+    host: 'your-rds-endpoint',
+    user: 'your-username',
+    password: 'your-password',
+    database: 'your-database',
+};
+
+export const deleteComment = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+    const commentId = event.pathParameters?.commentId;
+
+    if (!commentId) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: 'commentId is required.' }),
+        };
+    }
+
+    const connection = await mysql.createConnection(connectionConfig);
+
+    try {
+        const [result] = await connection.execute('DELETE FROM comments WHERE id = ?', [commentId]);
+
+        if ((result as mysql.ResultSetHeader).affectedRows === 0) {
+            return {
+                statusCode: 404,
+                body: JSON.stringify({ message: 'Comment not found.' }),
+            };
+        }
+
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: 'Comment deleted successfully.' }),
+        };
+    } catch (error) {
+        console.error('Error deleting comment:', error);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Failed to delete comment.', error: error.message }),
+        };
+    } finally {
+        await connection.end();
+    }
+};
+```
+
+## Summary
+
+- **Post Comment**: Inserts a new comment into the database.
+- **Edit Comment**: Updates an existing comment.
+- **List Comments**: Retrieves comments based on `postId`.
+- **Delete Comment**: Deletes a comment by `commentId`.
+
+Ensure that your Lambda function has the appropriate IAM permissions to access the RDS instance and that your RDS security group allows connections from the Lambda function.
+
+For more details on using AWS RDS and Lambda permissions, refer to the [AWS RDS documentation](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Welcome.html) and the [AWS Lambda documentation](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html).
+```
