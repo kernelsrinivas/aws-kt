@@ -1,5 +1,3 @@
-Here’s the information you requested in Markdown format:
-
 ```markdown
 # AWS CDK Serverless Example
 
@@ -18,22 +16,29 @@ Based on the [AWS CDK Serverless Example Documentation](https://docs.aws.amazon.
    npm install aws-cdk-lib constructs
    ```
 
-3. Build the project:
+3. Bootstrap your AWS environment (required for deploying AWS CDK apps to your AWS account):
+   ```bash
+   cdk bootstrap
+   ```
+
+   The `cdk bootstrap` command sets up the necessary resources (like an S3 bucket for storing assets) in your AWS account, allowing the CDK to deploy the stack. You only need to do this once per account and region.
+
+4. Build the project:
    ```bash
    npm run build
    ```
 
-4. Synthesize the CloudFormation template:
+5. Synthesize the CloudFormation template:
    ```bash
    cdk synth
    ```
 
-5. Deploy the stack:
+6. Deploy the stack:
    ```bash
    cdk deploy
    ```
 
-6. Destroy the stack (if needed):
+7. Destroy the stack (if needed):
    ```bash
    cdk destroy
    ```
@@ -119,4 +124,4 @@ aws lambda invoke --function-name CdkHelloWorldStack-HelloWorldFunctionunique-id
 ```
 
 This will invoke the Lambda function and save the output to `output.txt`.
-``` 
+```
