@@ -49,12 +49,12 @@ Based on the [AWS CDK Serverless Example Documentation](https://docs.aws.amazon.
 1. Create a new folder for the Lambda function:
    ```bash
    mkdir lambda && cd lambda
-   touch hello.js
+   touch hello.ts
    ```
 
-2. Add the following code in `hello.js`:
+2. Add the following code in `hello.ts`:
    ```javascript
-   exports.handler = async (event) => {
+   exports.handler = async (event: any) => {
        return {
            statusCode: 200,
            headers: { "Content-Type": "text/plain" },
