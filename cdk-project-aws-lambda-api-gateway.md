@@ -104,6 +104,14 @@ Based on the [AWS CDK Serverless Example Documentation](https://docs.aws.amazon.
 
 ## 3. Deploy and Test the API
 
+Once code are done, Run the following
+```bash
+   > cdk bootstrap
+   > npm run build
+   > cdk synth
+   > cdk deploy
+   ```
+
 After deploying the stack, you can test the API using the following commands:
 
 ### Test the API using `curl`:
