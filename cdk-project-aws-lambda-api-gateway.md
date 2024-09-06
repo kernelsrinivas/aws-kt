@@ -132,4 +132,3 @@ aws lambda invoke --function-name CdkHelloWorldStack-HelloWorldFunctionunique-id
 ```
 
 This will invoke the Lambda function and save the output to `output.txt`.
-```
