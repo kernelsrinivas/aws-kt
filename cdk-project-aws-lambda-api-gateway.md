@@ -5,6 +5,7 @@ Based on the [AWS CDK Serverless Example Documentation](https://docs.aws.amazon.
 
 ### Steps to Set Up a CDK Project
 
+
 1. Create a new CDK project:
    ```bash
    mkdir cdk-hello-world && cd cdk-hello-world
