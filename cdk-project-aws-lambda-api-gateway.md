@@ -1,10 +1,8 @@
-```markdown
 # AWS CDK Serverless Example
 
 Based on the [AWS CDK Serverless Example Documentation](https://docs.aws.amazon.com/cdk/v2/guide/serverless_example.html).
 
 ### Steps to Set Up a CDK Project
-
 
 1. Create a new CDK project:
    ```bash
