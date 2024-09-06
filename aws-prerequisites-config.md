@@ -1,4 +1,3 @@
-```markdown
 # AWS CLI Configuration Steps
 
 ### Prerequisites (IAM Developer User)
