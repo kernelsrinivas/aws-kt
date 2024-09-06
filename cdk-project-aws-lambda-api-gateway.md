@@ -1,4 +1,4 @@
-# AWS CDK Serverless Example
+# AWS CDK Serverless
 
 Based on the [AWS CDK Serverless Example Documentation](https://docs.aws.amazon.com/cdk/v2/guide/serverless_example.html).
 
