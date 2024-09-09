@@ -1,72 +1,56 @@
 Here’s how API Gateway works in AWS, step-by-step:
 
-```diff
-1. + **API Creation**: Define a REST, HTTP, or WebSocket API in API Gateway.
-2. - **Endpoint Definition**: Specify resources and methods (GET, POST, etc.) for the API.
-3. ! **Integration**: Set up backend integrations like Lambda, HTTP, or AWS services.
-4. + **Method Request**: API Gateway receives client requests via defined endpoints.
-5. - **Authorization**: Optionally validate requests using IAM, Cognito, or custom authorizers.
-6. ! **Request Transformation**: Modify or validate the request before sending it to the backend.
-7. + **Execution**: API Gateway routes the request to the integrated backend service.
-8. - **Response Handling**: Receive response from the backend and transform it, if needed.
-9. ! **Response Delivery**: Send the final response back to the client.
-10. + **Monitoring**: Track API usage and performance via CloudWatch Logs and Metrics.
-```
+- **API Creation**: Define a REST, HTTP, or WebSocket API in API Gateway.
+- **Endpoint Definition**: Specify resources and methods (GET, POST, etc.) for the API.
+- **Integration**: Set up backend integrations like Lambda, HTTP, or AWS services.
+- **Method Request**: API Gateway receives client requests via defined endpoints.
+- **Authorization**: Optionally validate requests using IAM, Cognito, or custom authorizers.
+- **Request Transformation**: Modify or validate the request before sending it to the backend.
+- **Execution**: API Gateway routes the request to the integrated backend service.
+- **Response Handling**: Receive response from the backend and transform it, if needed.
+- **Response Delivery**: Send the final response back to the client.
+- **Monitoring**: Track API usage and performance via CloudWatch Logs and Metrics.
 
-### **AWS API Gateway can integrate with various AWS services** to build APIs that enable access and control to those services. Below is a list of key AWS services:
+---
 
-### **Compute Services**:
-```diff
-+ 1. **AWS Lambda** – Allows invoking serverless functions in response to API requests.
-- 2. **Amazon EC2** – Access and control EC2 instances via APIs, though typically through intermediary services like Lambda.
-! 3. **AWS Fargate / Amazon ECS** – Trigger containerized services hosted on ECS/Fargate via API requests.
-```
+### **AWS Services Supported by API Gateway**:
 
-### **Storage Services**:
-```diff
-+ 4. **Amazon S3** – Use APIs to create presigned URLs, manage S3 buckets, or trigger Lambda functions based on S3 events.
-- 5. **Amazon DynamoDB** – Integrate APIs to interact with DynamoDB for data retrieval or manipulation.
-! 6. **Amazon RDS** – Interact with databases like MySQL, PostgreSQL indirectly via Lambda functions.
-```
+#### **Compute Services**:
+- <span style="color:red">**AWS Lambda**</span> – Invoke serverless functions in response to API requests.
+- <span style="color:blue">**Amazon EC2**</span> – Access EC2 instances via APIs, often through intermediary services like Lambda.
+- <span style="color:green">**AWS Fargate / Amazon ECS**</span> – Trigger containerized services hosted on ECS/Fargate via API requests.
 
-### **Messaging Services**:
-```diff
-+ 7. **Amazon SNS (Simple Notification Service)** – Trigger notifications to subscribers based on API requests.
-- 8. **Amazon SQS (Simple Queue Service)** – Send messages to SQS queues from API requests.
-! 9. **Amazon EventBridge (formerly CloudWatch Events)** – Route and monitor events through API integration.
-```
+#### **Storage Services**:
+- <span style="color:red">**Amazon S3**</span> – Create presigned URLs, manage S3 buckets, or trigger Lambda from S3 events.
+- <span style="color:blue">**Amazon DynamoDB**</span> – Retrieve or manipulate data in DynamoDB using API Gateway.
+- <span style="color:green">**Amazon RDS**</span> – Interact with databases like MySQL or PostgreSQL via Lambda.
 
-### **Security & Identity Services**:
-```diff
-+ 10. **AWS IAM (Identity and Access Management)** – Enforce access controls and manage permissions on API resources.
-- 11. **AWS Cognito** – Authenticate and authorize users for API access with user pools and identity pools.
-```
+#### **Messaging Services**:
+- <span style="color:red">**Amazon SNS**</span> – Trigger notifications to subscribers via API requests.
+- <span style="color:blue">**Amazon SQS**</span> – Send messages to SQS queues through API requests.
+- <span style="color:green">**Amazon EventBridge**</span> – Route and monitor events through API integration.
 
-### **Networking Services**:
-```diff
-+ 12. **Amazon VPC** – Enable private access to backend services running in a Virtual Private Cloud via API Gateway VPC links.
-- 13. **Amazon CloudFront** – Distribute and secure APIs globally with the Content Delivery Network (CDN).
-! 14. **Amazon Route 53** – Route API traffic to different backends or resources using domain name services.
-```
+#### **Security & Identity Services**:
+- <span style="color:red">**AWS IAM**</span> – Enforce access controls and permissions on API resources.
+- <span style="color:blue">**AWS Cognito**</span> – Authenticate users and manage access via APIs.
 
-### **Analytics Services**:
-```diff
-+ 15. **Amazon Kinesis** – Ingest and process real-time streaming data through APIs.
-- 16. **Amazon CloudWatch** – Monitor and log API requests and performance metrics.
-```
+#### **Networking Services**:
+- <span style="color:red">**Amazon VPC**</span> – Access private backend services in VPC through API Gateway.
+- <span style="color:blue">**Amazon CloudFront**</span> – Secure and distribute APIs globally using a CDN.
+- <span style="color:green">**Amazon Route 53**</span> – Route API traffic using domain names.
 
-### **Machine Learning Services**:
-```diff
-+ 17. **Amazon SageMaker** – Expose machine learning models and endpoints for real-time inference through APIs.
-- 18. **Amazon Rekognition** – Allow image or video recognition tasks via API integration.
-! 19. **Amazon Lex** – Integrate conversational interfaces into APIs.
-```
+#### **Analytics Services**:
+- <span style="color:red">**Amazon Kinesis**</span> – Ingest and process real-time streaming data via API.
+- <span style="color:blue">**Amazon CloudWatch**</span> – Monitor API requests and performance.
 
-### **Other Services**:
-```diff
-+ 20. **Amazon Step Functions** – Coordinate distributed applications through APIs to manage workflows.
-- 21. **AWS AppSync** – Build GraphQL APIs that interact with multiple AWS data sources.
-! 22. **AWS Secrets Manager** – Retrieve and manage secrets securely through API calls.
-```
+#### **Machine Learning Services**:
+- <span style="color:red">**Amazon SageMaker**</span> – Expose machine learning models for real-time inference.
+- <span style="color:blue">**Amazon Rekognition**</span> – Perform image or video recognition tasks via API.
+- <span style="color:green">**Amazon Lex**</span> – Integrate conversational interfaces with APIs.
 
-These services can be combined to build API-driven applications, allowing API Gateway to act as the front door for various services.
+#### **Other Services**:
+- <span style="color:red">**Amazon Step Functions**</span> – Coordinate workflows through API-based task orchestration.
+- <span style="color:blue">**AWS AppSync**</span> – Build GraphQL APIs that interact with multiple AWS data sources.
+- <span style="color:green">**AWS Secrets Manager**</span> – Securely retrieve and manage secrets via API.
+
+Each of these services can be integrated with API Gateway to build robust, scalable applications.
