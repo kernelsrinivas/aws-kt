@@ -101,6 +101,41 @@ export const lambdaHandler = async (event: string, context: Context): Promise<st
 
 For more details on each service and invocation method, consult the AWS Lambda documentation.
 
+Here’s a combined table that shows both **AWS CDK** and **AWS SDK** import statements for each service that can invoke AWS Lambda functions:
+
+### Services and their CDK & SDK Package Import Statements:
+
+| Service                                     | CDK Package Import Statements                                     | SDK Package Import Statements                                      |
+|---------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|
+| Amazon Managed Streaming for Apache Kafka   | `import * as kafka from '@aws-cdk/aws-msk-alpha';`                | `import { KafkaClient } from "@aws-sdk/client-kafka";`            |
+| Self-managed Apache Kafka                   | `import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources';` | `import { KafkaClient } from "@aws-sdk/client-kafka";`            |
+| Amazon API Gateway                          | `import * as apigateway from 'aws-cdk-lib/aws-apigateway';`       | `import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";` |
+| AWS CloudFormation                          | `import * as cfn from 'aws-cdk-lib/aws-cloudformation';`          | `import { CloudFormationClient } from "@aws-sdk/client-cloudformation";` |
+| Amazon CloudWatch Logs                      | `import * as logs from 'aws-cdk-lib/aws-logs';`                   | `import { CloudWatchLogsClient } from "@aws-sdk/client-cloudwatch-logs";` |
+| AWS CodeCommit                              | `import * as codecommit from 'aws-cdk-lib/aws-codecommit';`       | `import { CodeCommitClient } from "@aws-sdk/client-codecommit";` |
+| AWS CodePipeline                            | `import * as codepipeline from 'aws-cdk-lib/aws-codepipeline';`   | `import { CodePipelineClient } from "@aws-sdk/client-codepipeline";` |
+| Amazon Cognito                              | `import * as cognito from 'aws-cdk-lib/aws-cognito';`             | `import { CognitoIdentityProviderClient } from "@aws-sdk/client-cognito-identity-provider";` |
+| AWS Config                                  | `import * as config from 'aws-cdk-lib/aws-config';`               | `import { ConfigServiceClient } from "@aws-sdk/client-config-service";` |
+| Amazon Connect                              | `import * as connect from 'aws-cdk-lib/aws-connect';`             | `import { ConnectClient } from "@aws-sdk/client-connect";`        |
+| Amazon DynamoDB                             | `import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';`           | `import { DynamoDBClient } from "@aws-sdk/client-dynamodb";`      |
+| Amazon Elastic File System                  | `import * as efs from 'aws-cdk-lib/aws-efs';`                     | `import { EFSClient } from "@aws-sdk/client-efs";`                |
+| Elastic Load Balancing (ALB)                | `import * as elb from 'aws-cdk-lib/aws-elasticloadbalancingv2';`  | `import { ElasticLoadBalancingClient } from "@aws-sdk/client-elastic-load-balancing";` |
+| Amazon EventBridge (CloudWatch Events)      | `import * as events from 'aws-cdk-lib/aws-events';`               | `import { EventBridgeClient } from "@aws-sdk/client-eventbridge";`|
+| AWS IoT                                     | `import * as iot from 'aws-cdk-lib/aws-iot';`                     | `import { IoTClient } from "@aws-sdk/client-iot";`                |
+| Amazon Kinesis                              | `import * as kinesis from 'aws-cdk-lib/aws-kinesis';`             | `import { KinesisClient } from "@aws-sdk/client-kinesis";`        |
+| Amazon Data Firehose                        | `import * as firehose from 'aws-cdk-lib/aws-kinesisfirehose';`    | `import { FirehoseClient } from "@aws-sdk/client-firehose";`      |
+| Amazon Lex                                  | `import * as lex from 'aws-cdk-lib/aws-lex';`                     | `import { LexRuntimeV2Client } from "@aws-sdk/client-lex-runtime-v2";` |
+| Amazon MQ                                   | `import * as mq from 'aws-cdk-lib/aws-mq';`                       | `import { MQClient } from "@aws-sdk/client-mq";`                  |
+| Amazon Simple Email Service                 | `import * as ses from 'aws-cdk-lib/aws-ses';`                     | `import { SESClient } from "@aws-sdk/client-ses";`                |
+| Amazon Simple Notification Service (SNS)    | `import * as sns from 'aws-cdk-lib/aws-sns';`                     | `import { SNSClient } from "@aws-sdk/client-sns";`                |
+| Amazon Simple Queue Service (SQS)           | `import * as sqs from 'aws-cdk-lib/aws-sqs';`                     | `import { SQSClient } from "@aws-sdk/client-sqs";`                |
+| Amazon Simple Storage Service (S3)          | `import * as s3 from 'aws-cdk-lib/aws-s3';`                       | `import { S3Client } from "@aws-sdk/client-s3";`                  |
+| Secrets Manager                             | `import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';` | `import { SecretsManagerClient } from "@aws-sdk/client-secrets-manager";` |
+| AWS Step Functions                          | `import * as stepfunctions from 'aws-cdk-lib/aws-stepfunctions';` | `import { SFNClient } from "@aws-sdk/client-sfn";`                |
+| Amazon VPC Lattice                          | `import * as vpcLattice from 'aws-cdk-lib/aws-vpc-lattice';`      | `import { VPCLatticeClient } from "@aws-sdk/client-vpc-lattice";` |
+| AWS X-Ray                                   | `import * as xray from 'aws-cdk-lib/aws-xray';`                   | `import { XRayClient } from "@aws-sdk/client-xray";`              |
+
+This table includes the necessary import statements for both AWS CDK and AWS SDK to work with each service that can invoke Lambda functions.
 
 Here's a small TypeScript code snippet for handling basic operations for each type of AWS Lambda event. These examples assume that you're using AWS Lambda with the Node.js runtime and the `aws-lambda` types package.
 
