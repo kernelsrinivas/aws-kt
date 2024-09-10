@@ -14,7 +14,7 @@
 ```
 
 2. How does AWS Lambda's event-driven model work, and what are common event sources?
-```
+```markdown
 **Understanding Event-Driven Architecture (EDA):**
 
 - **What is it?**  
@@ -35,6 +35,8 @@ When a customer adds an item to their shopping cart, that action generates an ev
   1. **Independent Updates**: Teams can develop and deploy features for their services without disrupting the rest of the system.
   2. **Easy Expansion**: New features can be added by listening to existing events, without changing the core system.
   3. **Resilience**: Components can fail or scale independently, reducing the chances of a single failure bringing down the whole app.
+
+EDA is great for complex, scalable systems where services need to work in sync but maintain independence.
 
 EDA is great for complex, scalable systems where services need to work in sync but maintain independence.
 Link1: https://serverlessland.com/event-driven-architecture/what-are-event-driven-architectures
