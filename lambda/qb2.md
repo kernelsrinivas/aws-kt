@@ -1,3 +1,4 @@
+```markdown
 # Top 10 Professional/Developer Level AWS Lambda Interview Questions
 
 1. How would you optimize the cold start performance of an AWS Lambda function in a production environment?
@@ -10,4 +11,4 @@
 8. Can you describe the steps to migrate a monolithic application to an event-driven microservices architecture using AWS Lambda?
 9. How do you ensure efficient memory and CPU utilization in AWS Lambda functions, and what strategies do you employ to optimize function performance?
 10. How do you handle complex workflows and orchestration in serverless applications using AWS Lambda, and when would you choose AWS Step Functions over Lambda for managing state?
-
+```
