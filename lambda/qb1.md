@@ -14,6 +14,7 @@
 ```
 
 2. How does AWS Lambda's event-driven model work, and what are common event sources?
+```
 **Understanding Event-Driven Architecture (EDA):**
 
 - **What is it?**  
@@ -39,3 +40,4 @@ EDA is great for complex, scalable systems where services need to work in sync b
 Link1: https://serverlessland.com/event-driven-architecture/what-are-event-driven-architectures
 Link2: https://serverlessland.com/event-driven-architecture/visuals
 Link3: https://serverlessland.com/lambda
+```
