@@ -42,4 +42,5 @@ EDA is great for complex, scalable systems where services need to work in sync b
 Link1: https://serverlessland.com/event-driven-architecture/what-are-event-driven-architectures
 Link2: https://serverlessland.com/event-driven-architecture/visuals
 Link3: https://serverlessland.com/lambda
+Link4: https://serverlessland.com/patterns?services=lambda&framework=CDK&language=TypeScript
 ```
