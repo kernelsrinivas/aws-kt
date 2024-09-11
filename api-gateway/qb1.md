@@ -1,4 +1,3 @@
-```markdown
 ### Top 10 AWS API Gateway Interview Questions:
 
 1. What is AWS API Gateway?
@@ -78,4 +77,3 @@
       - **API errors**: Client-side or server-side errors (4XX or 5XX status codes).
       - **Request counts**: Number of requests received.
       - Additionally, you can enable **CloudWatch Logs** to log request and response data for debugging.
-```
